@@ -1,19 +1,39 @@
-import { Container, SimpleGrid, Text, VStack } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { Container, SimpleGrid, Text, VStack, Input, Box, useColorModeValue } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProductStore } from "../store/product";
 import ProductCard from "../components/ProductCard";
 
 const HomePage = () => {
   const { fetchProducts, products } = useProductStore();
+  const [video, setVideo] = useState("");
+  const [debounceVal, setDebounceVal] = useState("");
+
+  const debounceValue = useDebounce(video, 1000);
+
+  useEffect(() => {
+    setDebounceVal(video.replace("watch?v=", "embed/"));
+  }, [debounceValue]);
+
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts])
-  console.log(products);
 
   return (
     <Container maxW='container.xl' py={12}>
       <VStack spacing={8}>
+        <Box w={"65vw"} bg={useColorModeValue("white", "gray.800")} rounded={"lg"} shadow={"md"}>
+          <Input
+            placeholder="Enter Video"
+            name="name"
+            value={video}
+            onChange={(e) => setVideo(e.target.value)} />
+        </Box>
+        <iframe
+          width="1000vw"
+          height="560.25vw"
+          src={debounceVal || "https://www.youtube.com/embed/A_AJrtGtC3Y?si=7o7Q-Rr8CfNdoq9Z"}
+        ></iframe>;
         <Text
           fontSize={"30"}
           fontWeight={"bold"}
@@ -43,6 +63,20 @@ const HomePage = () => {
       </VStack>
     </Container>
   )
+}
+
+function useDebounce(cb, delay) {
+  const [debounceValue, setDebounceValue] = useState(cb);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebounceValue(cb);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [cb, delay]);
+  return debounceValue;
 }
 
 export default HomePage
