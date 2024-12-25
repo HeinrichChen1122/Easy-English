@@ -20,7 +20,7 @@ const HomePage = () => {
   }, [fetchProducts])
 
   return (
-    <Container maxW='container.xl' py={12}>
+    <Container maxW='container.xl' pt={6} pb={12}>
       <VStack spacing={8}>
         <Box w={"65vw"} bg={useColorModeValue("white", "gray.800")} rounded={"lg"} shadow={"md"}>
           <Input
@@ -41,7 +41,7 @@ const HomePage = () => {
           bgClip={"text"}
           textAlign={"center"}
         >
-          Current Products 🚀
+          Current Words
         </Text>
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w={"full"}>
@@ -52,12 +52,7 @@ const HomePage = () => {
 
         {products.length === 0 && (
           <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>
-            No products found 😢{" "}
-            <Link to={"/create"}>
-              <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
-                Create a product
-              </Text>
-            </Link>
+            No words left 😢{" "}
           </Text>
         )}
       </VStack>
