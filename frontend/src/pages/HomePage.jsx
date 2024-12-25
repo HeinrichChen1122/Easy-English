@@ -24,7 +24,7 @@ const HomePage = () => {
       <VStack spacing={8}>
         <Box w={"65vw"} bg={useColorModeValue("white", "gray.800")} rounded={"lg"} shadow={"md"}>
           <Input
-            placeholder="Enter Video"
+            placeholder="https://www.youtube.com/watch?v=A_AJrtGtC3Y"
             name="name"
             value={video}
             onChange={(e) => setVideo(e.target.value)} />
@@ -34,15 +34,6 @@ const HomePage = () => {
           height="560.25vw"
           src={debounceVal || "https://www.youtube.com/embed/A_AJrtGtC3Y?si=7o7Q-Rr8CfNdoq9Z"}
         ></iframe>;
-        <Text
-          fontSize={"30"}
-          fontWeight={"bold"}
-          bgGradient={"linear(to-r, cyan.400, blue.500)"}
-          bgClip={"text"}
-          textAlign={"center"}
-        >
-          Current Words
-        </Text>
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w={"full"}>
           {products.map((product) => (
@@ -52,7 +43,7 @@ const HomePage = () => {
 
         {products.length === 0 && (
           <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>
-            No words left 😢{" "}
+            😢{" "}
           </Text>
         )}
       </VStack>
