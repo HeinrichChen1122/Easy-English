@@ -37,11 +37,12 @@ const HomePage = () => {
             value={video}
             onChange={(e) => setVideo(e.target.value)} />
         </Box>
+
         <iframe
           width="1000vw"
           height="560.25vw"
-          src={debounceVal || "https://www.youtube.com/embed/A_AJrtGtC3Y?si=7o7Q-Rr8CfNdoq9Z"}
-        ></iframe>;
+          src={isValidUrl(debounceVal) ? debounceVal : "https://www.youtube.com/embed/A_AJrtGtC3Y?si=7o7Q-Rr8CfNdoq9Z"}
+        ></iframe>
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w={"full"}>
           {products.map((product) => (
@@ -71,6 +72,16 @@ function useDebounce(cb, delay) {
     };
   }, [cb, delay]);
   return debounceValue;
+}
+
+function isValidUrl(urlString) {
+  var urlPattern = new RegExp('^(https?:\\/\\/)?' +
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+    '((\\d{1,3}\\.){3}\\d{1,3}))' +
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+    '(\\?[;&a-z\\d%_.~+=-]*)?' +
+    '(\\#[-a-z\\d_]*)?$', 'i');
+  return !!urlPattern.test(urlString);
 }
 
 export default HomePage
