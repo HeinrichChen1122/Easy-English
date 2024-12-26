@@ -1,11 +1,12 @@
 import { Container, SimpleGrid, Text, VStack, Input, Box, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useProductStore } from "../store/product";
+import { useWordStore } from "../store/word";
 import ProductCard from "../components/ProductCard";
 
 const HomePage = () => {
   const { fetchProducts, products } = useProductStore();
+  const { fetchWords, words } = useWordStore();
   const [video, setVideo] = useState("");
   const [debounceVal, setDebounceVal] = useState("");
 
@@ -18,6 +19,13 @@ const HomePage = () => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts])
+
+  useEffect(() => {
+    let videoKey = video.split('watch?v=')[1]
+    if (videoKey) {
+      fetchWords(videoKey);
+    }
+  }, [fetchWords, debounceValue])
 
   return (
     <Container maxW='container.xl' pt={6} pb={12}>

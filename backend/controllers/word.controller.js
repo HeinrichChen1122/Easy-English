@@ -5,9 +5,11 @@ import pos from 'pos';
 
 export const getWords = async (req, res) => {
     try {
-
+        const { videoKey } = req.params
+        const YOUTUBE_URL = "https://www.youtube.com/watch?v="
+        
         //stores transcript in string
-        let transcriptObj = await YoutubeTranscript.fetchTranscript('https://youtu.be/f-2fP19uFVo')
+        let transcriptObj = await YoutubeTranscript.fetchTranscript(YOUTUBE_URL + videoKey)
         let text = transcriptObj.map((t) => t.text).join(' ');
         text = htmlToText(text);
         text = text.replace(/&#39;/g, "'");
@@ -67,7 +69,7 @@ export const getWords = async (req, res) => {
         })
         res.status(200).json({ success: true, data: masterList });
     } catch (error) {
-        console.error("Error in Create product:", error.message)
+        console.error("Error in Fetch Words:", error.message)
         res.status(500).json({ success: false, message: "Server Error" })
     }
 }

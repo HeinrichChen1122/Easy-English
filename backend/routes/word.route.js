@@ -3,6 +3,6 @@ import { getWords } from "../controllers/word.controller.js";
 
 const router = express.Router();
 
-router.get("/", getWords)
+router.get("/:videoKey", getWords)
 
 export default router;
