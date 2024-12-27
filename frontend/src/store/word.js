@@ -8,6 +8,8 @@ export const useWordStore = create((set) => ({
         const data = await res.json();
         if (data.success) {
             set({ words: data.data });
+        } else {
+            set({ words: [] });
         }
     },
     deleteWord: async (cardWord) => {
