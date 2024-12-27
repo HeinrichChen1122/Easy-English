@@ -38,11 +38,13 @@ const HomePage = () => {
           src={isValidUrl(debounceVal) ? debounceVal : "https://www.youtube.com/embed/A_AJrtGtC3Y?si=7o7Q-Rr8CfNdoq9Z"}
         ></iframe>
 
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w={"full"}>
-          {words && words[0] && <WordCard key={words[0].word} word={words[0]} />}
-          {words && words[1] && <WordCard key={words[1].word} word={words[1]} />}
-          {words && words[2] && <WordCard key={words[2].word} word={words[2]} />}
-        </SimpleGrid>
+        {words && words.length !== 0 && (
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w={"full"}>
+            {words[0] && <WordCard key={words[0].word} word={words[0]} />}
+            {words[1] && <WordCard key={words[1].word} word={words[1]} />}
+            {words[2] && <WordCard key={words[2].word} word={words[2]} />}
+          </SimpleGrid>
+        )}
 
         {words.length === 0 && (
           <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>

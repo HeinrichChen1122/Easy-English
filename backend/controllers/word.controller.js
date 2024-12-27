@@ -72,6 +72,7 @@ export const getWords = async (req, res) => {
         masterList.sort(function (a, b) {
             return b.frequency - a.frequency;
         })
+        console.log(masterList)
         res.status(200).json({ success: true, data: masterList });
     } catch (error) {
         console.error("Error in Fetch Words:", error.message)
