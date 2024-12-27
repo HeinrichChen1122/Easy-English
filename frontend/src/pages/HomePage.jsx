@@ -1,11 +1,9 @@
 import { Container, SimpleGrid, Text, VStack, Input, Box, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useProductStore } from "../store/product";
 import { useWordStore } from "../store/word";
-import ProductCard from "../components/ProductCard";
+import WordCard from "../components/WordCard";
 
 const HomePage = () => {
-  const { fetchProducts, products } = useProductStore();
   const { fetchWords, words } = useWordStore();
   const [video, setVideo] = useState("");
   const [debounceVal, setDebounceVal] = useState("");
@@ -15,10 +13,6 @@ const HomePage = () => {
   useEffect(() => {
     setDebounceVal(video.replace("watch?v=", "embed/"));
   }, [debounceValue]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts])
 
   useEffect(() => {
     let videoKey = video.split('watch?v=')[1]
@@ -45,12 +39,12 @@ const HomePage = () => {
         ></iframe>
 
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w={"full"}>
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+          {words[0] && <WordCard key={words[0].word} word={words[0]} />}
+          {words[1] && <WordCard key={words[1].word} word={words[1]} />}
+          {words[2] && <WordCard key={words[2].word} word={words[2]} />}
         </SimpleGrid>
 
-        {products.length === 0 && (
+        {words.length === 0 && (
           <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>
             😢{" "}
           </Text>
