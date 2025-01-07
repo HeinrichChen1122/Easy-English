@@ -13,12 +13,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cheerio": "^1.0.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "html-to-text": "^9.0.5",
     "mongoose": "^8.9.1",
     "pos": "^0.4.2",
-    "youtube-transcript": "^1.2.1"
+    "youtube-transcript": "^1.2.1",
+    "youtube-transcript-api": "^1.1.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
