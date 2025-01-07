@@ -1,4 +1,4 @@
-import { YoutubeTranscript } from 'youtube-transcript';
+import { getYoutubeTranscript } from "./youtube.controller.js";
 import { htmlToText } from 'html-to-text';
 import pos from 'pos';
 
@@ -8,7 +8,7 @@ export const getWords = async (req, res) => {
         const YOUTUBE_URL = "https://www.youtube.com/watch?v="
 
         //stores transcript in string
-        let transcriptObj = await YoutubeTranscript.fetchTranscript(YOUTUBE_URL + videoKey)
+        let transcriptObj = await getYoutubeTranscript(YOUTUBE_URL + videoKey)
         let text = transcriptObj.map((t) => t.text).join(' ');
         text = htmlToText(text);
         text = text.replace(/&#39;/g, "'");

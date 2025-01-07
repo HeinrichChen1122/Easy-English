@@ -5,7 +5,7 @@ import WordCard from "../components/WordCard";
 
 const HomePage = () => {
   const { fetchWords, words } = useWordStore();
-  const [video, setVideo] = useState("");
+  const [video, setVideo] = useState("https://www.youtube.com/watch?v=A_AJrtGtC3Y");
   const [debounceVal, setDebounceVal] = useState("");
 
   const debounceValue = useDebounce(video, 1000);
