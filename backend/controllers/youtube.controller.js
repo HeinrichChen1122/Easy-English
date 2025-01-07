@@ -1,7 +1,8 @@
 export const getYoutubeTranscript = async (youtubeURL) => {
     try {
+        console.log("youtubeURL: ", youtubeURL)
         const videoPageResponse = await fetch(youtubeURL);
-        console.log("videoPageResopnse: ", videoPageResopnse)
+        console.log("videoPageResopnse: ", videoPageResponse)
         const videoPageBody = await videoPageResponse.text();
         console.log("videoPageBody: ", videoPageBody)
         const splittedHTML = videoPageBody.split('"captions":');
