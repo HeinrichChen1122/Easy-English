@@ -1,8 +1,11 @@
 export const getYoutubeTranscript = async (youtubeURL) => {
     try {
         const videoPageResponse = await fetch(youtubeURL);
+        console.log("videoPageResopnse: ", videoPageResopnse)
         const videoPageBody = await videoPageResponse.text();
+        console.log("videoPageBody: ", videoPageBody)
         const splittedHTML = videoPageBody.split('"captions":');
+        console.log("splittedHTML: ", splittedHTML)
         const captions = (() => {
             try {
                 return JSON.parse(
@@ -12,7 +15,7 @@ export const getYoutubeTranscript = async (youtubeURL) => {
                 return undefined;
             }
         })()?.['playerCaptionsTracklistRenderer'];
-
+        console.log("captions: ", captions)
         const transcriptURL = captions.captionTracks[0].baseUrl;
         if (!captions.captionTracks.find((track) => track.languageCode === "en")) {
             throw new Error('No English Transcript');
