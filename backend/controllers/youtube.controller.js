@@ -1,34 +1,41 @@
-export const getYoutubeTranscript = async (youtubeURL) => {
+import axios from "axios";
+import * as cheerio from "cheerio";
+
+class TranscriptAPI {
+  static async getTranscript(id, config = {}) {
+    const url = new URL('https://youtubetranscript.com');
+    url.searchParams.set('server_vid2', id);
+    
+    const
+      response = await axios.get(url, config),
+      $ = cheerio.load(response.data, undefined, false),
+      err = $('error');
+  
+    if (err.length) throw new Error(err.text());
+    return $('transcript text').map((i, elem) => {
+      const $a = $(elem);
+      return {
+        text: $a.text(),
+        start: Number($a.attr('start')),
+        duration: Number($a.attr('dur'))
+      };
+    }).toArray();
+  }
+
+  static async validateID(id, config = {}) {
+    const url = new URL('https://video.google.com/timedtext');
+    url.searchParams.set('type', 'track');
+    url.searchParams.set('v', id);
+    url.searchParams.set('id', 0);
+    url.searchParams.set('lang', 'en');
+    
     try {
-        const videoPageResponse = await fetch(youtubeURL);
-        const videoPageBody = await videoPageResponse.text();
-        const splittedHTML = videoPageBody.split('"captions":');
-        const captions = (() => {
-            try {
-                return JSON.parse(
-                    splittedHTML[1].split(',"videoDetails')[0].replace('\n', '')
-                );
-            } catch (e) {
-                return undefined;
-            }
-        })()?.['playerCaptionsTracklistRenderer'];
-        console.log("captions: ", captions)
-        const transcriptURL = captions.captionTracks[0].baseUrl;
-        if (!captions.captionTracks.find((track) => track.languageCode === "en")) {
-            throw new Error('No English Transcript');
-        }
-        const transcriptResponse = await fetch(transcriptURL);
-        const transcriptBody = await transcriptResponse.text();
-        const RE_XML_TRANSCRIPT = /<text start="([^"]*)" dur="([^"]*)">([^<]*)<\/text>/g;
-        const results = [...transcriptBody.matchAll(RE_XML_TRANSCRIPT)];
-        let transcript = results.map((result) => ({
-            text: result[3],
-            duration: parseFloat(result[2]),
-            offset: parseFloat(result[1])
-        }));
-        return transcript
-    } catch (error) {
-        console.error("Error in Youtube Transcript:", error.message)
-        res.status(500).json({ success: false, message: "Server Error" })
+      await axios.get(url, config);
+      return !0;
+    } catch (_) {
+      return !1;
     }
+  }
 }
+
+export { TranscriptAPI as default };

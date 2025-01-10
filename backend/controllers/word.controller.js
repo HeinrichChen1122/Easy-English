@@ -1,6 +1,4 @@
-//import { getYoutubeTranscript } from "./youtube.controller.js";
-//import TranscriptAPI from 'youtube-transcript-api';
-import TranscriptAPI from "./youtubetwo.controller.js";
+import TranscriptAPI from "./youtube.controller.js";
 import { htmlToText } from 'html-to-text';
 import pos from 'pos';
 

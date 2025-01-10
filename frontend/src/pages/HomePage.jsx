@@ -5,10 +5,14 @@ import WordCard from "../components/WordCard";
 
 const HomePage = () => {
   const { fetchWords, words } = useWordStore();
-  const [video, setVideo] = useState("https://www.youtube.com/watch?v=A_AJrtGtC3Y");
+  const [video, setVideo] = useState("");
   const [debounceVal, setDebounceVal] = useState("");
 
   const debounceValue = useDebounce(video, 1000);
+
+  useEffect(() => {
+    fetchWords("A_AJrtGtC3Y");
+  }, []);
 
   useEffect(() => {
     setDebounceVal(video.replace("watch?v=", "embed/"));
